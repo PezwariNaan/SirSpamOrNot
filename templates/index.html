@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+  </head>
+  <body>
+    <h1>Sir SpamOrNot</h1>
+    <form method="POST" action="/">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required><br><br>
+
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" rows="5" cols="40" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if prediction is not none %}
+    <h2>Prediction:</h2>
+    <p>{{ prediction }}</p>
+    {% endif %}
+</body>
+</html>
