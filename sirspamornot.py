@@ -39,9 +39,9 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 encoding_table = np.load('encoding_table.npy', allow_pickle = True).item()
 max_len = 1024
 
-class Dasher(nn.Module):
+class SirSpamOrNot(nn.Module):
   def __init__(self, input_dimensions, embedding_dimensions):
-    super(Dasher, self).__init__()
+    super(SirSpamOrNot, self).__init__()
     self.embedding = nn.Embedding(input_dimensions, embedding_dimensions)
     self.linear = nn.Linear(embedding_dimensions, 1)
     self.dropout = nn.Dropout(0.5)
@@ -169,15 +169,15 @@ def make_prediction(tokens:torch.tensor, model:nn.Module) -> torch.tensor:
         return torch.sigmoid(output)
 
 def main():
-    input_dimensions = 46789
+    input_dimensions = 47824
     embedding_dimensions = 100
 
     test_text = "Hello, this is not a phishing email but here is a link anyway https:facebook.com"
     test_subject = "Super safe email"
     tokens = preprocess_text(test_subject, test_text).to(device)
 
-    model = Dasher(input_dimensions, embedding_dimensions)
-    model.load_state_dict(torch.load('dasher.pth', weights_only = True, map_location=torch.device(device)))
+    model = SirSpamOrNot(input_dimensions, embedding_dimensions)
+    model.load_state_dict(torch.load('sirspamornot.pth', weights_only = True, map_location=torch.device(device)))
     model.to(device)
     model.eval()
     pred = make_prediction(tokens, model)

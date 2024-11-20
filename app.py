@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import torch
 from flask  import Flask, render_template, request
-from dasher import preprocess_text, make_prediction, Dasher
+from sirspamornot import preprocess_text, make_prediction, SirSpamOrNot
 
 app = Flask(__name__)
 
@@ -9,9 +9,9 @@ app = Flask(__name__)
 input_dimensions = 47824
 embedding_dimensions = 100
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-model = Dasher(input_dimensions, embedding_dimensions)
+model = SirSpamOrNot(input_dimensions, embedding_dimensions)
 model.to(device)
-model.load_state_dict(torch.load('dasher.pth', weights_only=True ,map_location=torch.device(device)))
+model.load_state_dict(torch.load('sirspamornot.pth', weights_only=True ,map_location=torch.device(device)))
 model.eval()
 
 def process_email(subject:str, body:str) -> torch.tensor:
